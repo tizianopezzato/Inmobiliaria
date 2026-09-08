@@ -11,35 +11,32 @@ export default async function HomePage() {
 
   return (
     <div>
-      <section className="bg-white">
-        <div className="relative">
-          <Image
-            src="/local-real.jpg"
-            alt="Local de Matías Pezzato Propiedades"
-            width={2000}
-            height={2000}
-            priority
-            className="h-auto w-full"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-sky-950/80 via-sky-950/25 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 mx-auto max-w-6xl px-4 pb-10 pt-24 md:pb-14">
-            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-sky-200">
-              {siteConfig.name}
-            </p>
-            <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-white md:text-5xl">
-              Te acompañamos a encontrar el lugar donde empieza tu próxima etapa.
-            </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-sky-50 md:text-lg">
-              Somos un estudio cercano y profesional. Te escuchamos, te asesoramos
-              con claridad y te acompañamos en cada venta, alquiler o tasación,
-              con la responsabilidad que merece tu patrimonio.
-            </p>
-            <div className="mt-6 max-w-3xl">
-              <Suspense>
-                <SearchBar />
-              </Suspense>
-            </div>
+      <section className="relative min-h-[70vh] overflow-hidden md:min-h-[78vh]">
+        <Image
+          src="/local-real.jpg"
+          alt="Local de Matías Pezzato Propiedades"
+          fill
+          priority
+          className="object-cover object-[center_20%]"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-sky-950/80 via-sky-950/30 to-sky-950/10" />
+        <div className="relative mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-end px-4 pb-12 pt-28 md:min-h-[78vh] md:pb-16">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-sky-200">
+            {siteConfig.name}
+          </p>
+          <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-white md:text-6xl">
+            Te acompañamos a encontrar el lugar donde empieza tu próxima etapa.
+          </h1>
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-sky-50">
+            Somos un estudio cercano y profesional. Te escuchamos, te asesoramos
+            con claridad y te acompañamos en cada venta, alquiler o tasación,
+            con la responsabilidad que merece tu patrimonio.
+          </p>
+          <div className="mt-8 max-w-3xl">
+            <Suspense>
+              <SearchBar />
+            </Suspense>
           </div>
         </div>
       </section>
