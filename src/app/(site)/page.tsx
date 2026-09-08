@@ -20,13 +20,13 @@ export default async function HomePage() {
           className="object-cover object-[center_20%]"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-sky-950/80 via-sky-950/30 to-sky-950/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-sky-950/92 via-sky-950/72 to-sky-950/60" />
         <div className="relative mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-end px-4 pb-12 pt-28 md:min-h-[78vh] md:pb-16">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-sky-200">
             {siteConfig.name}
           </p>
           <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-white md:text-6xl">
-            Te acompañamos a encontrar el lugar donde empieza tu próxima etapa.
+            Encontrá el lugar que estás buscando.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-sky-50">
             Somos un estudio cercano y profesional. Te escuchamos, te asesoramos
