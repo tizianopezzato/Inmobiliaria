@@ -22,12 +22,14 @@ export function PropertyForm({ property }: { property?: Property }) {
   );
   const [values, setValues] = useState<PropertyFormValues>({
     type: property?.type ?? "venta",
+    property_type: property?.property_type ?? "casa",
     title: property?.title ?? "",
     description: property?.description ?? "",
     square_meters: property?.square_meters ?? 0,
     bedrooms: property?.bedrooms ?? 0,
     bathrooms: property?.bathrooms ?? 0,
     garage: property?.garage ?? false,
+    is_rented: property?.is_rented ?? false,
   });
 
   async function onSubmit(event: FormEvent) {
@@ -38,12 +40,14 @@ export function PropertyForm({ property }: { property?: Property }) {
     try {
       const payload = {
         type: values.type,
+        property_type: values.property_type,
         title: values.title.trim(),
         description: values.description.trim(),
         square_meters: property?.square_meters ?? 0,
         bedrooms: Number(values.bedrooms),
         bathrooms: Number(values.bathrooms),
         garage: values.garage,
+        is_rented: values.is_rented,
       };
 
       let propertyId = property?.id;
@@ -108,7 +112,7 @@ export function PropertyForm({ property }: { property?: Property }) {
     <form onSubmit={onSubmit} className="space-y-6 rounded-3xl bg-white p-6 shadow-sm">
       <div className="grid gap-4 md:grid-cols-2">
         <label className="block text-sm font-medium text-sky-900">
-          Tipo
+          Propiedad
           <select
             required
             value={values.type}
@@ -124,6 +128,32 @@ export function PropertyForm({ property }: { property?: Property }) {
             <option value="alquiler">Alquiler</option>
           </select>
         </label>
+        
+        <label className="block text-sm font-medium text-sky-900">
+          Tipo
+          <select
+            required
+            value={values.property_type ?? "casa"}
+            onChange={(event) =>
+              setValues((current) => ({
+                ...current,
+                property_type: event.target.value,
+              }))
+            }
+            className="mt-1 w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-3"
+          >
+            <option value="lote">Lote</option>
+            <option value="dpto">Dpto</option>
+            <option value="casa">Casa</option>
+            <option value="local">Local</option>
+            <option value="campo">Campo</option>
+            <option value="cochera">Cochera</option>
+            <option value="quinta">Quinta</option>
+          </select>
+        </label>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
         <label className="block text-sm font-medium text-sky-900">
           Título
           <input
@@ -134,6 +164,18 @@ export function PropertyForm({ property }: { property?: Property }) {
             }
             className="mt-1 w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-3"
           />
+        </label>
+
+        <label className="flex items-center gap-3 pt-6">
+          <input
+            type="checkbox"
+            checked={values.is_rented}
+            onChange={(event) =>
+              setValues((current) => ({ ...current, is_rented: event.target.checked }))
+            }
+            className="h-5 w-5 rounded border-sky-300 text-sky-600 focus:ring-sky-500"
+          />
+          <span className="text-sm font-medium text-sky-900">¿Propiedad Alquilada?</span>
         </label>
       </div>
 

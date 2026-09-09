@@ -27,6 +27,15 @@ export function PropertyCard({ property }: { property: Property }) {
         <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-sky-700">
           {property.type}
         </span>
+
+        {/* Cartel de Alquilado */}
+        {property.is_rented && (
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+            <span className="bg-rose-600 text-white font-extrabold text-base px-6 py-2 uppercase tracking-widest rotate-[-10deg] shadow-xl border-2 border-white">
+              Alquilado
+            </span>
+          </div>
+        )}
       </div>
       <div className="space-y-4 p-5">
         <h3 className="text-lg font-semibold text-sky-950">{property.title}</h3>

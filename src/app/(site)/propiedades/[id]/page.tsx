@@ -1,10 +1,9 @@
 import { notFound } from "next/navigation";
 import { Bath, BedDouble, Car } from "lucide-react";
 import { ImageGallery } from "@/components/ImageGallery";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { ContactModal } from "@/components/ContactModal";
 import { getSortedImages } from "@/lib/images";
 import { getPropertyById } from "@/lib/properties";
-import { propertyInquiryMessage } from "@/lib/whatsapp";
 
 export default async function PropertyDetailPage({
   params,
@@ -15,11 +14,21 @@ export default async function PropertyDetailPage({
   const property = await getPropertyById(id);
   if (!property) notFound();
 
+  // Definir tipo de consulta predeterminado basado en si es venta o alquiler
+  const defaultConsultaType = property.type === "alquiler" ? "Alquiler" : "Venta";
+
   return (
     <section className="mx-auto max-w-6xl px-4 py-12">
-      <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-sky-600">
-        {property.type}
-      </p>
+      <div className="flex items-center gap-3 mb-2">
+        <p className="text-sm font-semibold uppercase tracking-wide text-sky-600">
+          {property.type}
+        </p>
+        {property.property_type && (
+          <span className="rounded-full bg-sky-100 px-3 py-0.5 text-xs font-semibold uppercase tracking-wide text-sky-800">
+            {property.property_type}
+          </span>
+        )}
+      </div>
       <h1 className="mb-8 text-3xl font-semibold text-sky-950 md:text-4xl">
         {property.title}
       </h1>
@@ -40,9 +49,11 @@ export default async function PropertyDetailPage({
               Cochera: {property.garage ? "Sí" : "No"}
             </li>
           </ul>
-          <WhatsAppButton
-            label="Consultar por WhatsApp"
-            message={propertyInquiryMessage(property.title)}
+          
+          {/* Formulario obligatorio previo a WhatsApp */}
+          <ContactModal
+            buttonLabel="Consultar por WhatsApp"
+            defaultType={defaultConsultaType}
             className="w-full py-4 text-lg"
           />
         </aside>
