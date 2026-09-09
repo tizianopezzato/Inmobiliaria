@@ -1,8 +1,7 @@
 import { Mail, Phone } from "lucide-react";
 import { MapsButton } from "@/components/MapsButton";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { ContactModal } from "@/components/ContactModal";
 import { siteConfig } from "@/lib/config";
-import { appraisalMessage, contactMessage } from "@/lib/whatsapp";
 
 export default function ContactPage() {
   return (
@@ -59,16 +58,16 @@ export default function ContactPage() {
         <div className="rounded-3xl border border-sky-100 p-6">
           <h2 className="text-xl font-semibold text-sky-950">Dejanos tu consulta</h2>
           <p className="mt-2 mb-5 text-sky-700">
-            Te respondemos por WhatsApp con un mensaje ya armado.
+            Te responderemos por WhatsApp a la brevedad.
           </p>
-          <WhatsAppButton message={contactMessage} label="Escribir consulta" />
+          <ContactModal buttonLabel="Escribir consulta" defaultType="General" />
         </div>
         <div className="rounded-3xl border border-sky-100 p-6">
           <h2 className="text-xl font-semibold text-sky-950">Solicitar tasación</h2>
           <p className="mt-2 mb-5 text-sky-700">
-            Pedí una tasación de tu propiedad en un toque.
+            Consulta por el valor de tu propiedad
           </p>
-          <WhatsAppButton message={appraisalMessage} label="Solicitar tasación" />
+          <ContactModal buttonLabel="Solicitar tasación" defaultType="Tasación" />
         </div>
       </div>
     </section>
