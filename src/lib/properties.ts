@@ -5,6 +5,7 @@ const PROPERTY_SELECT = "*, property_images(*)";
 
 export async function getProperties(filters?: {
   type?: PropertyType;
+  property_type?: string;
   bedrooms?: number;
 }) {
   try {
@@ -16,6 +17,9 @@ export async function getProperties(filters?: {
 
     if (filters?.type) {
       query = query.eq("type", filters.type);
+    }
+    if (filters?.property_type) {
+      query = query.eq("property_type", filters.property_type);
     }
     if (filters?.bedrooms) {
       query = query.gte("bedrooms", filters.bedrooms);

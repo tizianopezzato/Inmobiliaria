@@ -23,7 +23,8 @@ export function ContactModal({
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const message = `Hola, mi nombre es ${nombre} ${apellido}. Tel: ${telefono}. Mail: ${mail}. Motivo: ${tipoConsulta}. Consulta: ${consulta}`;
+    const mailText = mail ? ` Mail: ${mail}.` : "";
+    const message = `Hola, mi nombre es ${nombre} ${apellido}. Tel: ${telefono}.${mailText} Motivo: ${tipoConsulta}. Consulta: ${consulta}`;
     const url = buildWhatsAppUrl(message);
     window.open(url, "_blank");
     setIsOpen(false);
@@ -48,61 +49,60 @@ export function ContactModal({
             >
               <X className="h-6 w-6" />
             </button>
-            <h3 className="text-xl font-bold text-sky-950 mb-1">Completá tus datos</h3>
-            <p className="text-sm text-sky-700 mb-5">Te responderemos por WhatsApp a la brevedad.</p>
+            <h3 className="mb-1 text-xl font-bold text-sky-950">Completá tus datos</h3>
+            <p className="mb-5 text-sm text-sky-700">Te responderemos por WhatsApp a la brevedad.</p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-sky-900 mb-1">Nombre</label>
+                  <label className="mb-1 block text-xs font-medium text-sky-900">Nombre</label>
                   <input
                     type="text"
                     required
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
-                    className="w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2.5 text-sky-900 text-sm outline-none focus:border-sky-400"
+                    className="w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2.5 text-sm text-sky-900 outline-none focus:border-sky-400"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-sky-900 mb-1">Apellido</label>
+                  <label className="mb-1 block text-xs font-medium text-sky-900">Apellido</label>
                   <input
                     type="text"
                     required
                     value={apellido}
                     onChange={(e) => setApellido(e.target.value)}
-                    className="w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2.5 text-sky-900 text-sm outline-none focus:border-sky-400"
+                    className="w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2.5 text-sm text-sky-900 outline-none focus:border-sky-400"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-sky-900 mb-1">Teléfono</label>
+                <label className="mb-1 block text-xs font-medium text-sky-900">Teléfono</label>
                 <input
                   type="tel"
                   required
                   value={telefono}
                   onChange={(e) => setTelefono(e.target.value)}
-                  className="w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2.5 text-sky-900 text-sm outline-none focus:border-sky-400"
+                  className="w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2.5 text-sm text-sky-900 outline-none focus:border-sky-400"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-sky-900 mb-1">Correo Electrónico</label>
+                <label className="mb-1 block text-xs font-medium text-sky-900">Correo Electrónico (Opcional)</label>
                 <input
                   type="email"
-                  required
                   value={mail}
                   onChange={(e) => setMail(e.target.value)}
-                  className="w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2.5 text-sky-900 text-sm outline-none focus:border-sky-400"
+                  className="w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2.5 text-sm text-sky-900 outline-none focus:border-sky-400"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-sky-900 mb-1">Motivo de consulta</label>
+                <label className="mb-1 block text-xs font-medium text-sky-900">Motivo de consulta</label>
                 <select
                   value={tipoConsulta}
                   onChange={(e) => setTipoConsulta(e.target.value)}
-                  className="w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2.5 text-sky-900 text-sm outline-none focus:border-sky-400"
+                  className="w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2.5 text-sm text-sky-900 outline-none focus:border-sky-400"
                 >
                   <option value="Alquiler">Alquiler</option>
                   <option value="Venta">Venta</option>
@@ -112,13 +112,13 @@ export function ContactModal({
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-sky-900 mb-1">Consulta</label>
+                <label className="mb-1 block text-xs font-medium text-sky-900">Consulta</label>
                 <textarea
                   required
                   rows={3}
                   value={consulta}
                   onChange={(e) => setConsulta(e.target.value)}
-                  className="w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2.5 text-sky-900 text-sm outline-none focus:border-sky-400"
+                  className="w-full rounded-2xl border border-sky-100 bg-sky-50 px-4 py-2.5 text-sm text-sky-900 outline-none focus:border-sky-400"
                 />
               </div>
 

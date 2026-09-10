@@ -30,6 +30,7 @@ export function PropertyForm({ property }: { property?: Property }) {
     bathrooms: property?.bathrooms ?? 0,
     garage: property?.garage ?? false,
     is_rented: property?.is_rented ?? false,
+    is_sold: property?.is_sold ?? false,
   });
 
   async function onSubmit(event: FormEvent) {
@@ -48,6 +49,7 @@ export function PropertyForm({ property }: { property?: Property }) {
         bathrooms: Number(values.bathrooms),
         garage: values.garage,
         is_rented: values.is_rented,
+        is_sold: values.is_sold,
       };
 
       let propertyId = property?.id;
@@ -166,17 +168,30 @@ export function PropertyForm({ property }: { property?: Property }) {
           />
         </label>
 
-        <label className="flex items-center gap-3 pt-6">
-          <input
-            type="checkbox"
-            checked={values.is_rented}
-            onChange={(event) =>
-              setValues((current) => ({ ...current, is_rented: event.target.checked }))
-            }
-            className="h-5 w-5 rounded border-sky-300 text-sky-600 focus:ring-sky-500"
-          />
-          <span className="text-sm font-medium text-sky-900">¿Propiedad Alquilada?</span>
-        </label>
+        <div className="flex flex-col gap-3 pt-6">
+          <label className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              checked={values.is_rented}
+              onChange={(event) =>
+                setValues((current) => ({ ...current, is_rented: event.target.checked }))
+              }
+              className="h-5 w-5 rounded border-sky-300 text-sky-600 focus:ring-sky-500"
+            />
+            <span className="text-sm font-medium text-sky-900">¿Propiedad Alquilada?</span>
+          </label>
+          <label className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              checked={values.is_sold}
+              onChange={(event) =>
+                setValues((current) => ({ ...current, is_sold: event.target.checked }))
+              }
+              className="h-5 w-5 rounded border-sky-300 text-sky-600 focus:ring-sky-500"
+            />
+            <span className="text-sm font-medium text-sky-900">¿Propiedad Vendida?</span>
+          </label>
+        </div>
       </div>
 
       <label className="block text-sm font-medium text-sky-900">

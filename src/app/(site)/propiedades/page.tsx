@@ -5,15 +5,22 @@ import type { PropertyType } from "@/lib/types";
 export default async function PropertiesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ tipo?: string; habitaciones?: string }>;
+  searchParams: Promise<{ propiedades?: string; tipo?: string; habitaciones?: string }>;
 }) {
   const params = await searchParams;
+  
+  // Operación: Venta o Alquiler
   const type =
-    params.tipo === "venta" || params.tipo === "alquiler"
-      ? (params.tipo as PropertyType)
+    params.propiedades === "venta" || params.propiedades === "alquiler"
+      ? (params.propiedades as PropertyType)
       : undefined;
+      
+  // Tipo de inmueble: Casa, Dpto, Lote, etc.
+  const property_type = params.tipo && params.tipo !== "todos" ? params.tipo : undefined;
+
   const properties = await getProperties({
     type,
+    property_type,
     bedrooms: params.habitaciones ? Number(params.habitaciones) : undefined,
   });
 

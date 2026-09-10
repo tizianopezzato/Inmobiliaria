@@ -9,8 +9,8 @@ export function PropertyCard({ property }: { property: Property }) {
   const src = mainImage ? getImagePublicUrl(mainImage.storage_path) : "";
 
   return (
-    <article className="overflow-hidden rounded-3xl border border-sky-100 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-      <div className="relative aspect-[4/3] bg-sky-50">
+    <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-sky-100 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+      <div className="relative w-full shrink-0 overflow-hidden bg-sky-50 aspect-[4/3]">
         {src ? (
           <Image
             src={src}
@@ -28,20 +28,24 @@ export function PropertyCard({ property }: { property: Property }) {
           {property.type}
         </span>
 
-        {/* Cartel de Alquilado */}
-        {property.is_rented && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <span className="bg-rose-600 text-white font-extrabold text-base px-6 py-2 uppercase tracking-widest rotate-[-10deg] shadow-xl border-2 border-white">
-              Alquilado
+        {/* Cartel de Vendido o Alquilado */}
+        {(property.is_rented || property.is_sold) && (
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/50">
+            <span 
+              className={`rotate-[-10deg] border-2 border-white px-6 py-2 text-base font-extrabold uppercase tracking-widest text-white shadow-xl ${
+                property.is_sold ? "bg-emerald-600" : "bg-rose-600"
+              }`}
+            >
+              {property.is_sold ? "Vendido" : "Alquilado"}
             </span>
           </div>
         )}
       </div>
-      <div className="space-y-4 p-5">
-        <h3 className="text-lg font-semibold text-sky-950">{property.title}</h3>
+      <div className="flex flex-1 flex-col justify-between space-y-4 p-5">
+        <h3 className="line-clamp-2 text-lg font-semibold text-sky-950">{property.title}</h3>
         <Link
           href={`/propiedades/${property.id}`}
-          className="inline-flex rounded-full bg-sky-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-sky-700"
+          className="inline-flex w-max rounded-full bg-sky-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-sky-700"
         >
           Ver más
         </Link>

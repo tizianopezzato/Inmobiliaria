@@ -11,26 +11,28 @@ export interface PropertyImage {
 export interface Property {
   id: string;
   type: PropertyType;
-  property_type?: string; // Nuevo campo
+  property_type?: string;
   title: string;
   description: string;
   square_meters: number;
   bedrooms: number;
   bathrooms: number;
   garage: boolean;
-  is_rented?: boolean; // Nuevo campo booleano
+  is_rented?: boolean;
+  is_sold?: boolean;
   property_images?: PropertyImage[];
   created_at?: string;
 }
 
 export interface PropertyFormValues {
   type: PropertyType;
-  property_type: string; // Nuevo campo
+  property_type: string;
   title: string;
   description: string;
   square_meters: number;
   bedrooms: number;
   bathrooms: number;
   garage: boolean;
-  is_rented: boolean; // Nuevo campo
+  is_rented: boolean;
+  is_sold: boolean;
 }
