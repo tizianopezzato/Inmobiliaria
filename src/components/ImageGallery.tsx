@@ -15,7 +15,7 @@ export function ImageGallery({
   const [active, setActive] = useState(0);
   if (images.length === 0) {
     return (
-      <div className="flex aspect-[16/10] items-center justify-center rounded-3xl bg-sky-50 text-sky-400">
+      <div className="flex aspect-[16/10] w-full items-center justify-center rounded-3xl bg-sky-50 text-sky-400">
         Sin imágenes
       </div>
     );
@@ -24,8 +24,8 @@ export function ImageGallery({
   const current = images[active] ?? images[0];
 
   return (
-    <div className="space-y-3">
-      <div className="relative aspect-[16/10] overflow-hidden rounded-3xl bg-sky-50">
+    <div className="w-full max-w-full min-w-0 space-y-3">
+      <div className="relative aspect-[16/10] w-full max-w-full overflow-hidden rounded-3xl bg-sky-50">
         <Image
           src={getImagePublicUrl(current.storage_path)}
           alt={title}
@@ -36,7 +36,7 @@ export function ImageGallery({
         />
       </div>
       {images.length > 1 && (
-        <div className="flex gap-2 overflow-x-auto pb-1">
+        <div className="flex w-full max-w-full gap-2 overflow-x-auto pb-1">
           {images.map((image, index) => (
             <button
               key={image.id}
