@@ -55,10 +55,16 @@ export function PropertyForm({ property }: { property?: Property }) {
       let propertyId = property?.id;
 
       if (propertyId) {
+        // Blindaje extra: Validación estricta del ID antes de actualizar
+        if (typeof propertyId !== "string" || propertyId.trim() === "") {
+          throw new Error("ID de propiedad inválido. Abortando actualización por seguridad.");
+        }
+
         const { error: updateError } = await supabase
           .from("properties")
           .update(payload)
           .eq("id", propertyId);
+        
         if (updateError) throw updateError;
       } else {
         const { data, error: insertError } = await supabase
@@ -66,8 +72,14 @@ export function PropertyForm({ property }: { property?: Property }) {
           .insert(payload)
           .select("id")
           .single();
+        
         if (insertError) throw insertError;
         propertyId = data.id;
+      }
+
+      // Blindaje extra para asegurar que haya un ID válido antes de subir imágenes
+      if (!propertyId) {
+        throw new Error("Fallo crítico: No se obtuvo el ID de la propiedad.");
       }
 
       const startOrder = existingImages.length;
@@ -92,21 +104,30 @@ export function PropertyForm({ property }: { property?: Property }) {
     } catch (err) {
       console.error(err);
       setError(
-        "No se pudo guardar la propiedad. Revisá que estés logueado y que Supabase esté configurado.",
+        "No se pudo guardar la propiedad. Revisá la consola para más detalles técnicos.",
       );
       setSaving(false);
     }
   }
 
   async function removeExistingImage(imageId: string, storagePath: string) {
+    // Blindaje de seguridad para eliminación
+    if (!imageId || !storagePath) return;
+
     const { error: storageError } = await supabase.storage
       .from("property-images")
       .remove([storagePath]);
     if (storageError) {
-      setError("No se pudo borrar la imagen.");
+      setError("No se pudo borrar la imagen del almacenamiento.");
       return;
     }
-    await supabase.from("property_images").delete().eq("id", imageId);
+    
+    const { error: dbError } = await supabase.from("property_images").delete().eq("id", imageId);
+    if (dbError) {
+      setError("No se pudo borrar el registro de la imagen en la base de datos.");
+      return;
+    }
+    
     setExistingImages((images) => images.filter((image) => image.id !== imageId));
   }
 
@@ -308,12 +329,12 @@ export function PropertyForm({ property }: { property?: Property }) {
         )}
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm font-semibold text-red-600">{error}</p>}
 
       <button
         type="submit"
         disabled={saving}
-        className="inline-flex items-center gap-2 rounded-full bg-sky-600 px-6 py-3 font-semibold text-white hover:bg-sky-700 disabled:opacity-70"
+        className="inline-flex items-center gap-2 rounded-full bg-sky-600 px-6 py-3 font-semibold text-white transition hover:bg-sky-700 disabled:opacity-70"
       >
         {saving && <LoaderCircle className="h-4 w-4 animate-spin" />}
         {property ? "Guardar cambios" : "Publicar propiedad"}

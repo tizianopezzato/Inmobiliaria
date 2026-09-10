@@ -27,12 +27,12 @@ export async function getProperties(filters?: {
 
     const { data, error } = await query;
     if (error) {
-      console.error(error);
+      console.error("Error crítico leyendo propiedades:", error.message, error.details);
       return [] as Property[];
     }
     return (data ?? []) as Property[];
   } catch (error) {
-    console.error(error);
+    console.error("Fallo de conexión en getProperties:", error);
     return [] as Property[];
   }
 }
@@ -47,7 +47,7 @@ export async function getLatestProperties(limit = 3) {
       .limit(limit);
 
     if (error) {
-      console.error(error);
+      console.error("Error leyendo últimas propiedades:", error.message);
       return [] as Property[];
     }
     return (data ?? []) as Property[];
@@ -67,6 +67,7 @@ export async function getPropertyById(id: string) {
       .single();
 
     if (error) {
+      console.error("Error buscando propiedad individual:", error.message);
       return null;
     }
     return data as Property;
