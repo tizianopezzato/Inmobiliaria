@@ -9,8 +9,8 @@ export function PropertyCard({ property }: { property: Property }) {
   const src = mainImage ? getImagePublicUrl(mainImage.storage_path) : "";
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-sky-100 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-      <div className="relative w-full shrink-0 overflow-hidden bg-sky-50 aspect-[4/3]">
+    <article className="flex h-full w-full min-w-0 flex-col overflow-hidden rounded-3xl border border-sky-100 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+      <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-sky-50">
         {src ? (
           <Image
             src={src}
