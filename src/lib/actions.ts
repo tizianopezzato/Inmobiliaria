@@ -43,27 +43,34 @@ export async function deletePropertyAction(formData: FormData) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  
   if (!user) {
     redirect("/admin/login");
   }
 
+  // 1. Obtener las rutas de las imágenes en el Storage
   const { data: images } = await supabase
     .from("property_images")
     .select("storage_path")
     .eq("property_id", id);
 
   const paths = (images ?? []).map((image) => image.storage_path);
+  
+  // 2. Borrar los archivos del Storage de Supabase
   if (paths.length > 0) {
     await supabase.storage.from("property-images").remove(paths);
   }
 
+  // 3. NUEVO: Borrar las filas de las imágenes en la tabla (evita error de clave foránea)
+  await supabase.from("property_images").delete().eq("property_id", id);
+
+  // 4. Borrar la propiedad de la tabla principal
   const { error } = await supabase.from("properties").delete().eq("id", id);
   if (error) {
-    console.error(error);
+    console.error("Error de Supabase al borrar la propiedad:", error);
     return;
   }
 
-  revalidatePath("/");
-  revalidatePath("/propiedades");
-  revalidatePath("/admin");
+  // 5. Refrescar las vistas para que desaparezca del panel
+  revalidatePath("/", "layout");
 }
